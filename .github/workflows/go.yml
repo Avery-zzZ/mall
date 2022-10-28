@@ -45,5 +45,6 @@ jobs:
         password: ${{ secrets.PWD }}
         script: |
           cd /home/ubuntu/work/bin
-          ./mall
+          fuser -k 8080/tcp
+          screen -dmS mall ./mall
           exit
