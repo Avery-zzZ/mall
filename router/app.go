@@ -13,6 +13,7 @@ import (
 
 func Router() *gin.Engine {
 	r := gin.Default()
+	r.Use(middlewares.Cors())
 
 	r.GET("/ping", service.GetPing)
 	r.POST("/login", service.Login)
