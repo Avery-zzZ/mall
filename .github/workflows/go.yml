@@ -19,7 +19,7 @@ jobs:
         go-version: 1.18
 
     - name: Build # 编译项目
-      run: go build -v ./
+      run: go build -v ./.github/bin/
 
     - name: 拉取编译结果到腾讯云
       uses: easingthemes/ssh-deploy@main
@@ -29,7 +29,7 @@ jobs:
           #SCp参数
           ARGS: "-rltgoDzvO --delete"
           #源目录
-          SOURCE: "./"
+          SOURCE: "./.github/bin/"
           #服务器Ip:换成你的服务器iP
           REMOTE_HOST:  ${{ secrets.HOST }}
           #用户
