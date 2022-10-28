@@ -48,3 +48,6 @@ jobs:
           fuser -k 8080/tcp
           screen -dmS mall ./mall
           exit
+          
+    - name: Delete bin
+      run: rm ./.github/bin/mall
