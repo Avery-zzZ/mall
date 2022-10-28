@@ -1,0 +1,470 @@
+definitions:
+  define.Res_success:
+    properties:
+      code:
+        example: 1
+        type: integer
+      msg:
+        example: success
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /addapt:
+    post:
+      description: add apt
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 所属商场id
+        in: formData
+        name: father_id
+        required: true
+        type: integer
+      - description: 部门编码（不可重复）
+        in: formData
+        name: apt_id
+        required: true
+        type: string
+      - description: 部门名称
+        in: formData
+        name: apt_name
+        type: string
+      - description: 部门地址
+        in: formData
+        name: apt_address
+        type: string
+      - description: 部门电话
+        in: formData
+        name: apt_tel
+        type: string
+      responses:
+        "200":
+          description: add apt
+          schema:
+            type: string
+      summary: 添加部门
+      tags:
+      - admin_api
+  /addmall:
+    post:
+      description: add mall
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 商场编码（不可重复）
+        in: formData
+        name: mall_id
+        required: true
+        type: string
+      - description: 商场名称
+        in: formData
+        name: mall_name
+        type: string
+      - description: 商场地址
+        in: formData
+        name: mall_address
+        type: string
+      - description: 商场电话
+        in: formData
+        name: mall_tel
+        type: string
+      responses:
+        "200":
+          description: add mall
+          schema:
+            type: string
+      summary: 添加商场
+      tags:
+      - admin_api
+  /addstaff:
+    post:
+      description: add staff
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 所属部门id
+        in: formData
+        name: father_id
+        required: true
+        type: integer
+      - description: 员工编码（不可重复）
+        in: formData
+        name: staff_id
+        required: true
+        type: string
+      - description: 员工姓名
+        in: formData
+        name: staff_name
+        type: string
+      - description: 员工岗位
+        in: formData
+        name: staff_pos
+        type: string
+      - description: 员工电话
+        in: formData
+        name: staff_tel
+        type: string
+      - description: 员工薪水
+        in: formData
+        name: staff_sal
+        type: number
+      responses:
+        "200":
+          description: '若失败，"code": -1,"msg": 失败原因'
+          schema:
+            $ref: '#/definitions/define.Res_success'
+      summary: 添加员工
+      tags:
+      - admin_api
+  /adduser:
+    post:
+      description: add user
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 账号
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: 密码
+        in: formData
+        name: passwd
+        type: string
+      - description: 账号权限等级
+        in: formData
+        name: grade
+        type: integer
+      responses:
+        "200":
+          description: add mall
+          schema:
+            type: string
+      summary: 增加用户
+      tags:
+      - root_api
+  /deleteapt:
+    post:
+      description: delete apt
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 部门ID
+        in: formData
+        name: ID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: add apt
+          schema:
+            type: string
+      summary: 删除部门（连锁删除）
+      tags:
+      - admin_api
+  /deletemall:
+    post:
+      description: delete mall
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 商场ID
+        in: formData
+        name: ID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: add mall
+          schema:
+            type: string
+      summary: 删除商场（连锁删除）
+      tags:
+      - admin_api
+  /deletestaff:
+    post:
+      description: delete staff
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 员工ID
+        in: formData
+        name: ID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: delete staff
+          schema:
+            type: string
+      summary: 删除员工
+      tags:
+      - admin_api
+  /editapt:
+    post:
+      description: edit apt
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 部门ID
+        in: formData
+        name: ID
+        required: true
+        type: string
+      - description: 部门编码
+        in: formData
+        name: apt_id
+        type: string
+      - description: 部门名称
+        in: formData
+        name: apt_name
+        type: string
+      - description: 部门地址
+        in: formData
+        name: apt_address
+        type: string
+      - description: 部门电话
+        in: formData
+        name: apt_tel
+        type: string
+      responses:
+        "200":
+          description: edit apt
+          schema:
+            type: string
+      summary: 修改部门信息
+      tags:
+      - admin_api
+  /editmall:
+    post:
+      description: edit mall
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 商场ID
+        in: formData
+        name: ID
+        required: true
+        type: string
+      - description: 商场编码
+        in: formData
+        name: mall_id
+        type: string
+      - description: 商场名称
+        in: formData
+        name: mall_name
+        type: string
+      - description: 商场地址
+        in: formData
+        name: mall_address
+        type: string
+      - description: 商场电话
+        in: formData
+        name: mall_tel
+        type: string
+      responses:
+        "200":
+          description: edit mall
+          schema:
+            type: string
+      summary: 修改商场信息
+      tags:
+      - admin_api
+  /editstaff:
+    post:
+      description: edit staff
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 员工ID
+        in: formData
+        name: ID
+        required: true
+        type: string
+      - description: 员工编码
+        in: formData
+        name: staff_id
+        required: true
+        type: string
+      - description: 员工姓名
+        in: formData
+        name: staff_name
+        type: string
+      - description: 员工岗位
+        in: formData
+        name: staff_pos
+        type: string
+      - description: 员工电话
+        in: formData
+        name: staff_tel
+        type: string
+      - description: 员工薪水
+        in: formData
+        name: staff_sal
+        type: number
+      responses:
+        "200":
+          description: edit staff
+          schema:
+            type: string
+      summary: 修改员工信息
+      tags:
+      - admin_api
+  /getaptlist:
+    post:
+      description: get apt list
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: father_id
+        in: formData
+        name: father_id
+        type: integer
+      - description: page(defualt 1)
+        in: formData
+        name: page
+        type: integer
+      - description: page size
+        in: formData
+        name: size
+        type: integer
+      - description: keyword
+        in: formData
+        name: keyword
+        type: string
+      responses:
+        "200":
+          description: apt list
+          schema:
+            type: string
+      summary: 获取部门信息
+      tags:
+      - member_api
+  /getmalllist:
+    post:
+      description: get mall list
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: page(defualt 1)
+        in: formData
+        name: page
+        type: integer
+      - description: page size
+        in: formData
+        name: size
+        type: integer
+      - description: keyword
+        in: formData
+        name: keyword
+        type: string
+      responses:
+        "200":
+          description: mall list
+          schema:
+            type: string
+      summary: 获取所有商场信息
+      tags:
+      - member_api
+  /getstafflist:
+    post:
+      description: 获取员工信息
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: father_id
+        in: formData
+        name: father_id
+        type: integer
+      - description: page(defualt 1)
+        in: formData
+        name: page
+        type: integer
+      - description: page size
+        in: formData
+        name: size
+        type: integer
+      - description: keyword
+        in: formData
+        name: keyword
+        type: string
+      responses:
+        "200":
+          description: staff list
+          schema:
+            type: string
+      summary: this is a summary
+      tags:
+      - member_api
+  /login:
+    post:
+      parameters:
+      - description: account
+        in: formData
+        name: username
+        type: string
+      - description: password
+        in: formData
+        name: passwd
+        type: string
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+      summary: 登录
+      tags:
+      - public_api
+  /ping:
+    get:
+      description: do ping
+      responses:
+        "200":
+          description: Helloworld
+          schema:
+            type: string
+      summary: ping
+      tags:
+      - public_api
+swagger: "2.0"
