@@ -4,30 +4,19 @@ import (
 	"errors"
 	"mall/define"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-sql-driver/mysql"
 )
 
-func checkPageNSize (c *gin.Context) (page, size int, err error){
-	page, err = strconv.Atoi(c.DefaultPostForm("page",define.DefaultPage)) 
-	if err!=nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code":-1,
-			"msg":"请填入整数页号",
-		})
-		return 
+func checkPageNSize (page, size int) (int,int){
+	if page==0 {
+		page = define.DefaultPage
 	}
-	size, err = strconv.Atoi(c.DefaultPostForm("size",define.DefaultSize))
-	if err!=nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code":-1,
-			"msg":"请填入整数页容量",
-		})
-		return
+	if size==0 {
+		size = define.DefaultSize
 	}
-	return
+	return page,size
 }
 
 func mysqlErrhandle(err error, c *gin.Context) {

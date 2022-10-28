@@ -20,9 +20,18 @@ import (
 // @Param passwd formData string false "password"
 // @Success 200 {string} json "success"
 func Login(c *gin.Context) {
-	username := c.PostForm("username")
-	passwd := c.PostForm("passwd")
-	if username == "" || passwd == "" {
+	
+	var user models.User
+	if err := c.ShouldBind(&user); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+        return
+    }
+
+	if user.Name == "" || user.Password == "" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "账号或密码为空",
@@ -30,7 +39,7 @@ func Login(c *gin.Context) {
 		return
 	}
 	data := new(models.User)
-	err := models.DB.Where("name = ? AND passwd = ?", username, passwd).First(&data).Error
+	err := models.DB.Where("name = ? AND passwd = ?", user.Name, user.Password).First(&data).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			c.JSON(http.StatusOK, gin.H{

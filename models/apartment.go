@@ -4,20 +4,15 @@ import "gorm.io/gorm"
 
 type Apartment struct {
 	gorm.Model
-	Father_id   int    `gorm:"column:father_id;type:int;" json:"father_id"`
-	Apt_id      string `gorm:"column:apt_id;type:varchar(15);" json:"apt_id"`
-	Apt_name    string `gorm:"column:apt_name;type:varchar(63);" json:"apt_name"`
-	Apt_address string `gorm:"column:apt_address;type:varchar(255);" json:"apt_address"`
-	Apt_tel     string `gorm:"column:apt_tel;type:varchar(255);" json:"apt_tel"`
+	ApartmentBacic
 }
 
 type ApartmentBacic struct {
-	ID          uint   `gorm:"primarykey"`
-	Father_id   int    `gorm:"column:father_id;type:int;" json:"father_id"`
-	Apt_id      string `gorm:"column:apt_id;type:varchar(15);" json:"apt_id"`
-	Apt_name    string `gorm:"column:apt_name;type:varchar(63);" json:"apt_name"`
-	Apt_address string `gorm:"column:apt_address;type:varchar(255);" json:"apt_address"`
-	Apt_tel     string `gorm:"column:apt_tel;type:varchar(255);" json:"apt_tel"`
+	Father_id   int    `gorm:"column:father_id;type:int;" json:"father_id" form:"father_id"`
+	Apt_id      string `gorm:"column:apt_id;type:varchar(15);" json:"apt_id" form:"apt_id"`
+	Apt_name    string `gorm:"column:apt_name;type:varchar(63);" json:"apt_name" form:"apt_name"`
+	Apt_address string `gorm:"column:apt_address;type:varchar(255);" json:"apt_address" form:"apt_address"`
+	Apt_tel     string `gorm:"column:apt_tel;type:varchar(255);" json:"apt_tel" form:"apt_tel"`
 }
 
 func (table Apartment) TableName() string {

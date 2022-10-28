@@ -6,18 +6,14 @@ import (
 
 type Mall struct {
 	gorm.Model
-	Mall_id      string `gorm:"column:mall_id;type:varchar(15);" json:"mall_id"`
-	Mall_name    string `gorm:"column:mall_name;type:varchar(63);" json:"mall_name"`
-	Mall_address string `gorm:"column:mall_address;type:varchar(255);" json:"mall_address"`
-	Mall_tel     string `gorm:"column:mall_tel;type:varchar(255);" json:"mall_tel"`
+	MallBasic
 }
 
 type MallBasic struct {
-	ID           uint   `gorm:"primarykey"`
-	Mall_id      string `gorm:"column:mall_id;type:varchar(15);" json:"mall_id"`
-	Mall_name    string `gorm:"column:mall_name;type:varchar(63);" json:"mall_name"`
-	Mall_address string `gorm:"column:mall_address;type:varchar(255);" json:"mall_address"`
-	Mall_tel     string `gorm:"column:mall_tel;type:varchar(255);" json:"mall_tel"`
+	Mall_id      string `gorm:"column:mall_id;type:varchar(15);" json:"mall_id" form:"mall_id"`
+	Mall_name    string `gorm:"column:mall_name;type:varchar(63);" json:"mall_name" form:"mall_name"`
+	Mall_address string `gorm:"column:mall_address;type:varchar(255);" json:"mall_address" form:"mall_address"`
+	Mall_tel     string `gorm:"column:mall_tel;type:varchar(255);" json:"mall_tel" form:"mall_tel"`
 }
 
 func (table Mall) TableName() string {

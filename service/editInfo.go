@@ -3,7 +3,6 @@ package service
 import (
 	"mall/models"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,8 +33,19 @@ func EditMall(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	mall_id, has := c.GetPostForm("mall_id")
-	if !has {
+
+	var mall models.Mall
+	if err = c.ShouldBind(&mall) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+		return
+	}
+
+
+	if mall.Mall_id=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "编码不能为空",
@@ -43,8 +53,7 @@ func EditMall(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	ID, has := c.GetPostForm("ID")
-	if !has {
+	if mall.ID==0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "ID不能为空",
@@ -53,18 +62,7 @@ func EditMall(c *gin.Context) {
 		return
 	}
 
-	mall_name, _ := c.GetPostForm("mall_name")
-	mall_address, _ := c.GetPostForm("mall_address")
-	mall_tel, _ := c.GetPostForm("mall_tel")
-
-	data := &models.Mall{
-		Mall_id:      mall_id,
-		Mall_name:    mall_name,
-		Mall_address: mall_address,
-		Mall_tel:     mall_tel,
-	}
-
-	err = models.DB.Model(new(models.Mall)).Where("id = ?", ID).Updates(data).Error
+	err = models.DB.Model(new(models.Mall)).Where("id = ?", mall.ID).Updates(mall).Error
 	if err != nil {
 		mysqlErrhandle(err, c)
 		return
@@ -101,8 +99,18 @@ func EditApt(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	apt_id, has := c.GetPostForm("apt_id")
-	if !has {
+
+	var apt models.Apartment
+	if err = c.ShouldBind(&apt) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+		return
+	}
+
+	if apt.Apt_id=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "编码不能为空",
@@ -110,8 +118,7 @@ func EditApt(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	ID, has := c.GetPostForm("ID")
-	if !has {
+	if apt.ID==0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "ID不能为空",
@@ -120,18 +127,7 @@ func EditApt(c *gin.Context) {
 		return
 	}
 
-	apt_name, _ := c.GetPostForm("apt_name")
-	apt_address, _ := c.GetPostForm("apt_address")
-	apt_tel, _ := c.GetPostForm("apt_tel")
-
-	data := &models.Apartment{
-		Apt_id:      apt_id,
-		Apt_name:    apt_name,
-		Apt_address: apt_address,
-		Apt_tel:     apt_tel,
-	}
-
-	err = models.DB.Model(new(models.Apartment)).Where("id = ?", ID).Updates(data).Error
+	err = models.DB.Model(new(models.Apartment)).Where("id = ?", apt.ID).Updates(apt).Error
 	if err != nil {
 		mysqlErrhandle(err, c)
 		return
@@ -169,8 +165,18 @@ func EditStaff(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	staff_id, has := c.GetPostForm("staff_id")
-	if !has {
+
+	var staff models.Staff
+	if err = c.ShouldBind(&staff) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+		return
+	}
+
+	if staff.Staff_id=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "编码不能为空",
@@ -178,8 +184,7 @@ func EditStaff(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	ID, has := c.GetPostForm("ID")
-	if !has {
+	if staff.ID==0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "ID不能为空",
@@ -187,33 +192,8 @@ func EditStaff(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	staff_sal, has := c.GetPostForm("staff_sal")
-	var staff_sal_value float64 = 0
-	if has {
-		staff_sal_value, err = strconv.ParseFloat(staff_sal, 64)
-		if err != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code": -1,
-				"msg":  "薪水格式错误",
-			})
-			c.Abort()
-			return
-		}
-	}
 
-	staff_name, _ := c.GetPostForm("staff_name")
-	staff_pos, _ := c.GetPostForm("staff_pos")
-	staff_tel, _ := c.GetPostForm("staff_tel")
-
-	data := &models.Staff{
-		Staff_id:   staff_id,
-		Staff_name: staff_name,
-		Staff_pos:  staff_pos,
-		Staff_tel:  staff_tel,
-		Staff_sal:  staff_sal_value,
-	}
-
-	err = models.DB.Model(new(models.Staff)).Where("id = ?", ID).Updates(data).Error
+	err = models.DB.Model(new(models.Staff)).Where("id = ?", staff.ID).Updates(staff).Error
 	if err != nil {
 		mysqlErrhandle(err, c)
 		return

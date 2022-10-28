@@ -4,7 +4,6 @@ import (
 
 	"mall/models"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -35,8 +34,17 @@ func AddMall(c *gin.Context) {
 		return
 	}
 
-	mall_id, has := c.GetPostForm("mall_id")
-	if !has {
+	var mall models.MallBasic
+	if err = c.ShouldBind(&mall) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+		return
+	}
+
+	if mall.Mall_id=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "编码不能为空",
@@ -45,18 +53,7 @@ func AddMall(c *gin.Context) {
 		return
 	}
 
-	mall_name, _ := c.GetPostForm("mall_name")
-	mall_address, _ := c.GetPostForm("mall_address")
-	mall_tel, _ := c.GetPostForm("mall_tel")
-
-	data := &models.Mall{
-		Mall_id:      mall_id,
-		Mall_name:    mall_name,
-		Mall_address: mall_address,
-		Mall_tel:     mall_tel,
-	}
-
-	err = models.DB.Create(data).Error
+	err = models.DB.Create(&models.Mall{MallBasic: mall}).Error
 	if err != nil {
 		mysqlErrhandle(err, c)
 		return
@@ -94,17 +91,17 @@ func AddApt(c *gin.Context) {
 		return
 	}
 
-	father_id_str, has := c.GetPostForm("father_id")
-	if !has {
+	var apt models.ApartmentBacic
+	if err = c.ShouldBind(&apt) ; err!=nil{
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "所属商场id不能为空",
+			"msg":  "请求格式错误",
 		})
 		c.Abort()
 		return
 	}
-	apt_id, has := c.GetPostForm("apt_id")
-	if !has {
+
+	if apt.Apt_id=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "编码不能为空",
@@ -113,29 +110,7 @@ func AddApt(c *gin.Context) {
 		return
 	}
 
-	father_id, err := strconv.Atoi(father_id_str)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "所属商场id格式错误",
-		})
-		c.Abort()
-		return
-	}
-
-	apt_name, _ := c.GetPostForm("apt_name")
-	apt_address, _ := c.GetPostForm("apt_address")
-	apt_tel, _ := c.GetPostForm("apt_tel")
-
-	data := &models.Apartment{
-		Father_id:   father_id,
-		Apt_id:      apt_id,
-		Apt_name:    apt_name,
-		Apt_address: apt_address,
-		Apt_tel:     apt_tel,
-	}
-
-	err = models.DB.Create(data).Error
+	err = models.DB.Create(&models.Apartment{ApartmentBacic: apt}).Error
 	if err != nil {
 		mysqlErrhandle(err, c)
 		return
@@ -176,17 +151,17 @@ func AddStaff(c *gin.Context) {
 		return
 	}
 
-	father_id_str, has := c.GetPostForm("father_id")
-	if !has {
+	var staff models.StaffBasic
+	if err = c.ShouldBind(&staff) ; err!=nil{
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "所属部门id不能为空",
+			"msg":  "请求格式错误",
 		})
 		c.Abort()
 		return
 	}
-	staff_id, has := c.GetPostForm("staff_id")
-	if !has {
+
+	if staff.Staff_id=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "编码不能为空",
@@ -195,44 +170,7 @@ func AddStaff(c *gin.Context) {
 		return
 	}
 
-	father_id, err := strconv.Atoi(father_id_str)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "所属部门id格式错误",
-		})
-		c.Abort()
-		return
-	}
-
-	staff_sal, has := c.GetPostForm("staff_sal")
-	var staff_sal_value float64 = 0
-	if has {
-		staff_sal_value, err = strconv.ParseFloat(staff_sal, 64)
-		if err != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code": -1,
-				"msg":  "薪水格式错误",
-			})
-			c.Abort()
-			return
-		}
-	}
-
-	staff_name, _ := c.GetPostForm("staff_name")
-	staff_pos, _ := c.GetPostForm("staff_pos")
-	staff_tel, _ := c.GetPostForm("staff_tel")
-
-	data := &models.Staff{
-		Father_id:  father_id,
-		Staff_id:   staff_id,
-		Staff_name: staff_name,
-		Staff_pos:  staff_pos,
-		Staff_tel:  staff_tel,
-		Staff_sal:  staff_sal_value,
-	}
-
-	err = models.DB.Create(data).Error
+	err = models.DB.Create(&models.Staff{StaffBasic: staff}).Error
 	if err != nil {
 		mysqlErrhandle(err, c)
 		return

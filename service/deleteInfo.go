@@ -30,8 +30,17 @@ func DeleteMall(c *gin.Context) {
 		return
 	}
 
-	ID, has := c.GetPostForm("ID")
-	if !has {
+	var mall models.Mall
+	if err = c.ShouldBind(&mall) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+		return
+	}
+
+	if mall.ID == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "ID不能为空",
@@ -40,18 +49,18 @@ func DeleteMall(c *gin.Context) {
 		return
 	}
 
-	err = models.DB.Model(new(models.Mall)).Where("id = ?",ID).Unscoped().Delete(&models.Mall{}).Error
+	err = models.DB.Model(new(models.Mall)).Where("id = ?", mall.ID).Unscoped().Delete(&models.Mall{}).Error
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"code":-1,
-			"msg":"删除失败",
+			"code": -1,
+			"msg":  "删除失败",
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"code":1,
-		"msg":"删除成功",
+		"code": 1,
+		"msg":  "删除成功",
 	})
 }
 
@@ -88,18 +97,18 @@ func DeleteApartment(c *gin.Context) {
 		return
 	}
 
-	err = models.DB.Model(new(models.Apartment)).Where("id = ?",ID).Unscoped().Delete(&models.Apartment{}).Error
+	err = models.DB.Model(new(models.Apartment)).Where("id = ?", ID).Unscoped().Delete(&models.Apartment{}).Error
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"code":-1,
-			"msg":"删除失败",
+			"code": -1,
+			"msg":  "删除失败",
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"code":1,
-		"msg":"删除成功",
+		"code": 1,
+		"msg":  "删除成功",
 	})
 }
 
@@ -136,17 +145,17 @@ func DeleteStaff(c *gin.Context) {
 		return
 	}
 
-	err = models.DB.Model(new(models.Staff)).Where("id = ?",ID).Unscoped().Delete(&models.Staff{}).Error
+	err = models.DB.Model(new(models.Staff)).Where("id = ?", ID).Unscoped().Delete(&models.Staff{}).Error
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
-			"code":-1,
-			"msg":"删除失败",
+			"code": -1,
+			"msg":  "删除失败",
 		})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"code":1,
-		"msg":"删除成功",
+		"code": 1,
+		"msg":  "删除成功",
 	})
 }

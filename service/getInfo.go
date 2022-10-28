@@ -8,6 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type getStruct struct{
+	Page int `json:"page" form:"page"`
+	Size int `json:"size" form:"size"`
+	Keyword string `json:"keyword" form:"keyword"`
+	Father_id int `json:"father_id" form:"father_id"`
+}
+
 // PingExample godoc
 // @Tags public_api
 // @Router /ping [get]
@@ -32,19 +39,24 @@ func GetPing(c *gin.Context) {
 // @Success 200 {string} json "mall list"
 func GetMallList(c *gin.Context) {
 
-	page, size, err := checkPageNSize(c)
-	if err != nil {
+	var getStruct getStruct
+	if err := c.ShouldBind(&getStruct) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
 		c.Abort()
 		return
 	}
 
+	page, size := checkPageNSize(getStruct.Page,getStruct.Size)
+
 	page = (page - 1) * size
 	var count int64
-	keyword := c.PostForm("keyword")
 
-	tx := models.GetMallList(keyword)
+	tx := models.GetMallList(getStruct.Keyword)
 	list := make([]*models.MallBasic, 0)
-	err = tx.Count(&count).Omit("created_at", "updated_at", "deleted_at").Offset(page).Limit(size).Find(&list).Error
+	err := tx.Count(&count).Omit("created_at", "updated_at", "deleted_at").Offset(page).Limit(size).Find(&list).Error
 	if err != nil {
 		log.Println("GetMallList error:", err)
 		return
@@ -72,24 +84,27 @@ func GetMallList(c *gin.Context) {
 // @Success 200 {string} json "apt list"
 func GetAptList(c *gin.Context) {
 
-	fatherIdStr := c.PostForm("father_id")
-
-	page, size, err := checkPageNSize(c)
-	if err != nil {
+	var getStruct getStruct
+	if err := c.ShouldBind(&getStruct) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
 		c.Abort()
 		return
 	}
 
+	page, size := checkPageNSize(getStruct.Page,getStruct.Size)
+
 	page = (page - 1) * size
 	var count int64
-	keyword := c.PostForm("keyword")
 
-	tx := models.GetAptList(keyword)
-	if fatherIdStr != "" {
-		tx = tx.Where("father_id = ?", fatherIdStr)
+	tx := models.GetAptList(getStruct.Keyword)
+	if getStruct.Father_id != 0 {
+		tx = tx.Where("father_id = ?", getStruct.Father_id)
 	}
 	list := make([]*models.ApartmentBacic, 0)
-	err = tx.Count(&count).Offset(page).Limit(size).Find(&list).Error
+	err := tx.Count(&count).Offset(page).Limit(size).Find(&list).Error
 	if err != nil {
 		log.Println("GetAptList error:", err)
 		return
@@ -117,26 +132,29 @@ func GetAptList(c *gin.Context) {
 // @Success 200 {string} json "staff list"
 func GetStaffList(c *gin.Context) {
 
-	fatherIdStr := c.PostForm("father_id")
-
-	page, size, err := checkPageNSize(c)
-	if err != nil {
+	var getStruct getStruct
+	if err := c.ShouldBind(&getStruct) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
 		c.Abort()
 		return
 	}
 
+	page, size := checkPageNSize(getStruct.Page,getStruct.Size)
+
 	page = (page - 1) * size
 	var count int64
-	keyword := c.PostForm("keyword")
 
-	tx := models.GetStaffList(keyword)
-	if fatherIdStr != "" {
-		tx = tx.Where("father_id = ?", fatherIdStr)
+	tx := models.GetStaffList(getStruct.Keyword)
+	if getStruct.Father_id != 0 {
+		tx = tx.Where("father_id = ?", getStruct.Father_id)
 	}
-	list := make([]*models.StaffBasic, 0)
-	err = tx.Count(&count).Offset(page).Limit(size).Find(&list).Error
+	list := make([]*models.ApartmentBacic, 0)
+	err := tx.Count(&count).Offset(page).Limit(size).Find(&list).Error
 	if err != nil {
-		log.Println("GetStaffList error:", err)
+		log.Println("GetAptList error:", err)
 		return
 	}
 
