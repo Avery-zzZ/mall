@@ -40,9 +40,9 @@ jobs:
     - name: Run
       uses: appleboy/ssh-action@master
       with:
-        host:  ${{ HOST }}
+        host:  ${{ secrets.HOST }}
         username: "ubuntu"
-        password: ${{ PWD }}
+        password: ${{ secrets.PWD }}
         script: |
           cd /home/ubuntu/work/bin
           ./mall
