@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/gin-contrib/cors"
 	"mall/middlewares"
 	"mall/service"
 
@@ -13,7 +14,12 @@ import (
 
 func Router() *gin.Engine {
 	r := gin.Default()
-	r.Use(middlewares.Cors())
+
+	// cors
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowHeaders = []string{"*"}
+	corsConfig.AllowAllOrigins = true
+	r.Use(cors.New(corsConfig))
 
 	r.GET("/ping", service.GetPing)
 	r.POST("/login", service.Login)

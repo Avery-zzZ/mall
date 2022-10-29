@@ -10,11 +10,6 @@ import (
 
 func AuthAdminCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 放行OPTIONS请求
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(http.StatusNoContent)
-		}
-
 		auth := c.GetHeader("token")
 		if auth == "" {
 			c.JSON(http.StatusOK, gin.H{
