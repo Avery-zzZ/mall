@@ -14,7 +14,7 @@ import (
 // @Description delete mall
 // @Param token header string true "token"
 // @Param ID formData string true "商场ID"
-// @Success 200 {string} json "add mall"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func DeleteMall(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -71,7 +71,7 @@ func DeleteMall(c *gin.Context) {
 // @Description delete apt
 // @Param token header string true "token"
 // @Param ID formData string true "部门ID"
-// @Success 200 {string} json "add apt"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func DeleteApartment(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -119,7 +119,7 @@ func DeleteApartment(c *gin.Context) {
 // @Description delete staff
 // @Param token header string true "token"
 // @Param ID formData string true "员工ID"
-// @Success 200 {string} json "delete staff"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func DeleteStaff(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)

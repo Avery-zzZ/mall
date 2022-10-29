@@ -16,9 +16,9 @@ import (
 // @Router /login [post]
 // @Summary 登录
 // @Description
-// @Param username formData string false "account"
-// @Param passwd formData string false "password"
-// @Success 200 {string} json "success"
+// @Param username formData string true "account"
+// @Param passwd formData string true "password"
+// @Success 200 {object} define.Res_login_success "若失败，"code": -1,"msg": 失败原因"
 func Login(c *gin.Context) {
 	
 	var user models.User
@@ -80,7 +80,7 @@ func Login(c *gin.Context) {
 // @Param name formData string true "账号"
 // @Param passwd formData string false "密码"
 // @Param grade formData int false "账号权限等级"
-// @Success 200 {string} json "add mall"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func AddUser(c *gin.Context) {
 	needGrade := 3
 	grade, err := getGrade(c.GetHeader("token"), c)

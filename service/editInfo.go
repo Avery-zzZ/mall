@@ -18,7 +18,7 @@ import (
 // @Param mall_name formData string false "商场名称"
 // @Param mall_address formData string false "商场地址"
 // @Param mall_tel formData string false "商场电话"
-// @Success 200 {string} json "edit mall"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func EditMall(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -84,7 +84,7 @@ func EditMall(c *gin.Context) {
 // @Param apt_name formData string false "部门名称"
 // @Param apt_address formData string false "部门地址"
 // @Param apt_tel formData string false "部门电话"
-// @Success 200 {string} json "edit apt"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func EditApt(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -150,7 +150,7 @@ func EditApt(c *gin.Context) {
 // @Param staff_pos formData string false "员工岗位"
 // @Param staff_tel formData string false "员工电话"
 // @Param staff_sal formData float64 false "员工薪水"
-// @Success 200 {string} json "edit staff"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func EditStaff(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)

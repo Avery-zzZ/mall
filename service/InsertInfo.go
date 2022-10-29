@@ -17,8 +17,7 @@ import (
 // @Param mall_id formData string true "商场编码（不可重复）"
 // @Param mall_name formData string false "商场名称"
 // @Param mall_address formData string false "商场地址"
-// @Param mall_tel formData string false "商场电话"
-// @Success 200 {string} json "add mall"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func AddMall(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -75,7 +74,7 @@ func AddMall(c *gin.Context) {
 // @Param apt_name formData string false "部门名称"
 // @Param apt_address formData string false "部门地址"
 // @Param apt_tel formData string false "部门电话"
-// @Success 200 {string} json "add apt"
+// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func AddApt(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
