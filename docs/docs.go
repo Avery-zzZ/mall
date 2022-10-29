@@ -66,9 +66,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "add apt",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -107,19 +107,13 @@ const docTemplate = `{
                         "description": "商场地址",
                         "name": "mall_address",
                         "in": "formData"
-                    },
-                    {
-                        "type": "string",
-                        "description": "商场电话",
-                        "name": "mall_tel",
-                        "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "add mall",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -226,9 +220,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "add mall",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -259,9 +253,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "add apt",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -292,9 +286,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "add mall",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -325,9 +319,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "delete staff",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -382,9 +376,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "edit apt",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -439,9 +433,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "edit mall",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -503,9 +497,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "edit staff",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_success"
                         }
                     }
                 }
@@ -666,20 +660,22 @@ const docTemplate = `{
                         "type": "string",
                         "description": "account",
                         "name": "username",
-                        "in": "formData"
+                        "in": "formData",
+                        "required": true
                     },
                     {
                         "type": "string",
                         "description": "password",
                         "name": "passwd",
-                        "in": "formData"
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "success",
+                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/define.Res_login_success"
                         }
                     }
                 }
@@ -704,6 +700,31 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "define.Res_login_success": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "data": {
+                    "$ref": "#/definitions/define.Res_login_success_data"
+                }
+            }
+        },
+        "define.Res_login_success_data": {
+            "type": "object",
+            "properties": {
+                "grade": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidmlwMiIsImdyYWRlIjoyLCJleHAiOjE2NjcwMTI3MDN9.HPfE71HBW-TVazslSxvJ87bNwp3Ra_zluJGoABQ3nPk"
+                }
+            }
+        },
         "define.Res_success": {
             "type": "object",
             "properties": {

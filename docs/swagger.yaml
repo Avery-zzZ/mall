@@ -1,4 +1,21 @@
 definitions:
+  define.Res_login_success:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        $ref: '#/definitions/define.Res_login_success_data'
+    type: object
+  define.Res_login_success_data:
+    properties:
+      grade:
+        example: 2
+        type: integer
+      token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidmlwMiIsImdyYWRlIjoyLCJleHAiOjE2NjcwMTI3MDN9.HPfE71HBW-TVazslSxvJ87bNwp3Ra_zluJGoABQ3nPk
+        type: string
+    type: object
   define.Res_success:
     properties:
       code:
@@ -44,9 +61,9 @@ paths:
         type: string
       responses:
         "200":
-          description: add apt
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 添加部门
       tags:
       - admin_api
@@ -72,15 +89,11 @@ paths:
         in: formData
         name: mall_address
         type: string
-      - description: 商场电话
-        in: formData
-        name: mall_tel
-        type: string
       responses:
         "200":
-          description: add mall
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 添加商场
       tags:
       - admin_api
@@ -151,9 +164,9 @@ paths:
         type: integer
       responses:
         "200":
-          description: add mall
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 增加用户
       tags:
       - root_api
@@ -173,9 +186,9 @@ paths:
         type: string
       responses:
         "200":
-          description: add apt
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 删除部门（连锁删除）
       tags:
       - admin_api
@@ -195,9 +208,9 @@ paths:
         type: string
       responses:
         "200":
-          description: add mall
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 删除商场（连锁删除）
       tags:
       - admin_api
@@ -217,9 +230,9 @@ paths:
         type: string
       responses:
         "200":
-          description: delete staff
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 删除员工
       tags:
       - admin_api
@@ -255,9 +268,9 @@ paths:
         type: string
       responses:
         "200":
-          description: edit apt
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 修改部门信息
       tags:
       - admin_api
@@ -293,9 +306,9 @@ paths:
         type: string
       responses:
         "200":
-          description: edit mall
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 修改商场信息
       tags:
       - admin_api
@@ -336,9 +349,9 @@ paths:
         type: number
       responses:
         "200":
-          description: edit staff
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_success'
       summary: 修改员工信息
       tags:
       - admin_api
@@ -443,16 +456,18 @@ paths:
       - description: account
         in: formData
         name: username
+        required: true
         type: string
       - description: password
         in: formData
         name: passwd
+        required: true
         type: string
       responses:
         "200":
-          description: success
+          description: '若失败，"code": -1,"msg": 失败原因'
           schema:
-            type: string
+            $ref: '#/definitions/define.Res_login_success'
       summary: 登录
       tags:
       - public_api
