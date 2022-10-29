@@ -1,4 +1,19 @@
 definitions:
+  define.Res_get_success:
+    properties:
+      code:
+        example: 1
+        type: integer
+      data:
+        $ref: '#/definitions/define.Res_get_success_data'
+    type: object
+  define.Res_get_success_data:
+    properties:
+      count:
+        example: 1
+        type: integer
+      list: {}
+    type: object
   define.Res_login_success:
     properties:
       code:
@@ -25,106 +40,170 @@ definitions:
         example: success
         type: string
     type: object
+  models.ApartmentBasic:
+    properties:
+      ID:
+        example: 8848
+        type: integer
+      apt_address:
+        example: 超商B区二期三楼北面电梯旁
+        type: string
+      apt_id:
+        example: dz1-relx06
+        type: string
+      apt_name:
+        example: 悦刻销售部
+        type: string
+      apt_tel:
+        example: "18355555555"
+        type: string
+      father_id:
+        example: 666
+        type: integer
+    type: object
+  models.MallBasic:
+    properties:
+      ID:
+        example: 666
+        type: integer
+      mall_address:
+        example: 四川省甘孜藏族自治州理塘县朱雀大道1-1
+        type: string
+      mall_id:
+        example: dingzhen001
+        type: string
+      mall_name:
+        example: 丁真烟酒专卖超商
+        type: string
+      mall_tel:
+        example: 400-114514
+        type: string
+    type: object
+  models.StaffBasic:
+    properties:
+      ID:
+        example: 114514
+        type: integer
+      father_id:
+        example: 8848
+        type: integer
+      staff_address:
+        example: 销售经理
+        type: string
+      staff_id:
+        example: dz1r6-zhenzhu
+        type: string
+      staff_name:
+        example: 珍珠
+        type: string
+      staff_sal:
+        example: 100000
+        type: number
+      staff_tel:
+        example: "18355555555"
+        type: string
+    type: object
 info:
   contact: {}
 paths:
   /addapt:
     post:
-      description: add apt
       parameters:
       - description: token
         in: header
         name: token
         required: true
         type: string
-      - description: 所属商场id
+      - description: 所属商场ID
         in: formData
         name: father_id
         required: true
         type: integer
-      - description: 部门编码（不可重复）
+      - description: 部门编码 varchar(15)
         in: formData
         name: apt_id
         required: true
         type: string
-      - description: 部门名称
+      - description: 部门名称 varchar(63)
         in: formData
         name: apt_name
         type: string
-      - description: 部门地址
+      - description: 部门地址 varchar(255)
         in: formData
         name: apt_address
         type: string
-      - description: 部门电话
+      - description: 部门电话 varchar(255)
         in: formData
         name: apt_tel
         type: string
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 添加部门
+      summary: '[2]添加部门'
       tags:
       - admin_api
   /addmall:
     post:
-      description: add mall
       parameters:
       - description: token
         in: header
         name: token
         required: true
         type: string
-      - description: 商场编码（不可重复）
+      - description: 商场编码 varchar(15)
         in: formData
         name: mall_id
         required: true
         type: string
-      - description: 商场名称
+      - description: 商场名称 varchar(63)
         in: formData
         name: mall_name
         type: string
-      - description: 商场地址
+      - description: 商场地址 varchar(255)
         in: formData
         name: mall_address
         type: string
+      - description: 商场电话 varchar(255)
+        in: formData
+        name: mall_tel
+        type: string
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 添加商场
+      summary: '[2]添加商场'
       tags:
       - admin_api
   /addstaff:
     post:
-      description: add staff
       parameters:
       - description: token
         in: header
         name: token
         required: true
         type: string
-      - description: 所属部门id
+      - description: 所属部门ID
         in: formData
         name: father_id
         required: true
         type: integer
-      - description: 员工编码（不可重复）
+      - description: 员工编码 varchar(15)
         in: formData
         name: staff_id
         required: true
         type: string
-      - description: 员工姓名
+      - description: 员工姓名 varchar(63)
         in: formData
         name: staff_name
         type: string
-      - description: 员工岗位
+      - description: 员工岗位 varchar(255)
         in: formData
         name: staff_pos
         type: string
-      - description: 员工电话
+      - description: 员工电话 varchar(255)
         in: formData
         name: staff_tel
         type: string
@@ -134,10 +213,10 @@ paths:
         type: number
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 添加员工
+      summary: '[2]添加员工'
       tags:
       - admin_api
   /adduser:
@@ -149,30 +228,32 @@ paths:
         name: token
         required: true
         type: string
-      - description: 账号
+      - description: 账号 varchar(31)
         in: formData
         name: name
         required: true
         type: string
-      - description: 密码
+      - description: 密码 varchar(127)
         in: formData
         name: passwd
+        required: true
         type: string
       - description: 账号权限等级
         in: formData
         name: grade
+        required: true
         type: integer
       responses:
         "200":
           description: '若失败，"code": -1,"msg": 失败原因'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 增加用户
+      summary: '[3]增加用户'
       tags:
       - root_api
   /deleteapt:
     post:
-      description: delete apt
+      description: 需确认操作：此操作会将所有所属员工删除
       parameters:
       - description: token
         in: header
@@ -183,18 +264,18 @@ paths:
         in: formData
         name: ID
         required: true
-        type: string
+        type: integer
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 删除部门（连锁删除）
+      summary: '[2]删除部门（连锁删除）'
       tags:
       - admin_api
   /deletemall:
     post:
-      description: delete mall
+      description: 需确认操作：此操作会将所有所属部门和员工删除
       parameters:
       - description: token
         in: header
@@ -205,18 +286,18 @@ paths:
         in: formData
         name: ID
         required: true
-        type: string
+        type: integer
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 删除商场（连锁删除）
+      summary: '[2]删除商场（连锁删除）'
       tags:
       - admin_api
   /deletestaff:
     post:
-      description: delete staff
+      description: 需确认操作
       parameters:
       - description: token
         in: header
@@ -227,18 +308,18 @@ paths:
         in: formData
         name: ID
         required: true
-        type: string
+        type: integer
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 删除员工
+      summary: '[2]删除员工'
       tags:
       - admin_api
   /editapt:
     post:
-      description: edit apt
+      description: 进入修改界面后，将原来的值填入对应输入框
       parameters:
       - description: token
         in: header
@@ -249,34 +330,35 @@ paths:
         in: formData
         name: ID
         required: true
-        type: string
-      - description: 部门编码
+        type: integer
+      - description: 部门编码 varchar(15)
         in: formData
         name: apt_id
+        required: true
         type: string
-      - description: 部门名称
+      - description: 部门名称 varchar(63)
         in: formData
         name: apt_name
         type: string
-      - description: 部门地址
+      - description: 部门地址 varchar(255)
         in: formData
         name: apt_address
         type: string
-      - description: 部门电话
+      - description: 部门电话 varchar(255)
         in: formData
         name: apt_tel
         type: string
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 修改部门信息
+      summary: '[2]修改部门信息'
       tags:
       - admin_api
   /editmall:
     post:
-      description: edit mall
+      description: 进入修改界面后，将原来的值填入对应输入框
       parameters:
       - description: token
         in: header
@@ -287,34 +369,35 @@ paths:
         in: formData
         name: ID
         required: true
-        type: string
-      - description: 商场编码
+        type: integer
+      - description: 商场编码 varchar(15)
         in: formData
         name: mall_id
+        required: true
         type: string
-      - description: 商场名称
+      - description: 商场名称 varchar(63)
         in: formData
         name: mall_name
         type: string
-      - description: 商场地址
+      - description: 商场地址 varchar(255)
         in: formData
         name: mall_address
         type: string
-      - description: 商场电话
+      - description: 商场电话 varchar(255)
         in: formData
         name: mall_tel
         type: string
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 修改商场信息
+      summary: '[2]修改商场信息'
       tags:
       - admin_api
   /editstaff:
     post:
-      description: edit staff
+      description: 进入修改界面后，将原来的值填入对应输入框
       parameters:
       - description: token
         in: header
@@ -325,21 +408,21 @@ paths:
         in: formData
         name: ID
         required: true
-        type: string
-      - description: 员工编码
+        type: integer
+      - description: 员工编码 varchar(15)
         in: formData
         name: staff_id
         required: true
         type: string
-      - description: 员工姓名
+      - description: 员工姓名 varchar(63)
         in: formData
         name: staff_name
         type: string
-      - description: 员工岗位
+      - description: 员工岗位 varchar(255)
         in: formData
         name: staff_pos
         type: string
-      - description: 员工电话
+      - description: 员工电话 varchar(255)
         in: formData
         name: staff_tel
         type: string
@@ -349,15 +432,15 @@ paths:
         type: number
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_success'
-      summary: 修改员工信息
+      summary: '[2]修改员工信息'
       tags:
       - admin_api
   /getaptlist:
     post:
-      description: get apt list
+      description: father_id为空则获取所有
       parameters:
       - description: token
         in: header
@@ -368,58 +451,81 @@ paths:
         in: formData
         name: father_id
         type: integer
-      - description: page(defualt 1)
+      - description: 页号(默认1)
         in: formData
         name: page
         type: integer
-      - description: page size
+      - description: 页大小(默认20)
         in: formData
         name: size
         type: integer
-      - description: keyword
+      - description: 搜索关键字(针对编码和名称的%*%)
         in: formData
         name: keyword
         type: string
       responses:
         "200":
-          description: apt list
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
-            type: string
-      summary: 获取部门信息
+            allOf:
+            - $ref: '#/definitions/define.Res_get_success'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/define.Res_get_success_data'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.ApartmentBasic'
+                        type: array
+                    type: object
+              type: object
+      summary: '[1]获取部门信息'
       tags:
       - member_api
   /getmalllist:
     post:
-      description: get mall list
       parameters:
       - description: token
         in: header
         name: token
         required: true
         type: string
-      - description: page(defualt 1)
+      - description: 页号(默认1)
         in: formData
         name: page
         type: integer
-      - description: page size
+      - description: 页大小(默认20)
         in: formData
         name: size
         type: integer
-      - description: keyword
+      - description: 搜索关键字(针对编码和名称的%*%)
         in: formData
         name: keyword
         type: string
       responses:
         "200":
-          description: mall list
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
-            type: string
-      summary: 获取所有商场信息
+            allOf:
+            - $ref: '#/definitions/define.Res_get_success'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/define.Res_get_success_data'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.MallBasic'
+                        type: array
+                    type: object
+              type: object
+      summary: '[1]获取所有商场信息'
       tags:
       - member_api
   /getstafflist:
     post:
-      description: 获取员工信息
+      description: father_id为空则获取所有
       parameters:
       - description: token
         in: header
@@ -430,42 +536,54 @@ paths:
         in: formData
         name: father_id
         type: integer
-      - description: page(defualt 1)
+      - description: 页号(默认1)
         in: formData
         name: page
         type: integer
-      - description: page size
+      - description: 页大小(默认20)
         in: formData
         name: size
         type: integer
-      - description: keyword
+      - description: 搜索关键字(针对编码和名称的%*%)
         in: formData
         name: keyword
         type: string
       responses:
         "200":
-          description: staff list
+          description: '失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
-            type: string
-      summary: this is a summary
+            allOf:
+            - $ref: '#/definitions/define.Res_get_success'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/define.Res_get_success_data'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/models.StaffBasic'
+                        type: array
+                    type: object
+              type: object
+      summary: '[1]获取员工信息'
       tags:
       - member_api
   /login:
     post:
       parameters:
-      - description: account
+      - description: 账号 varchar(31)
         in: formData
         name: username
         required: true
         type: string
-      - description: password
+      - description: 密码 varchar(127)
         in: formData
         name: passwd
         required: true
         type: string
       responses:
         "200":
-          description: '若失败，"code": -1,"msg": 失败原因'
+          description: 'grade可用于展示，也可用于隐藏无权限功能<br><br>失败则返回 {"code": -1,"msg": "$reason"}'
           schema:
             $ref: '#/definitions/define.Res_login_success'
       summary: 登录
@@ -476,7 +594,7 @@ paths:
       description: do ping
       responses:
         "200":
-          description: Helloworld
+          description: OK
           schema:
             type: string
       summary: ping

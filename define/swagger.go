@@ -14,3 +14,13 @@ type Res_login_success struct{
 	Code int `json:"code" example:"1"`
 	Data Res_login_success_data `json:"data"`
 }
+
+type Res_get_success_data struct{
+	Count int `json:"count" example:"1"`
+	List interface{} `json:"list"` 
+}
+
+type Res_get_success struct{
+	Code int `json:"code" example:"1"`
+	Data Res_get_success_data `json:"data"`
+}

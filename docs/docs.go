@@ -18,11 +18,10 @@ const docTemplate = `{
     "paths": {
         "/addapt": {
             "post": {
-                "description": "add apt",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "添加部门",
+                "summary": "[2]添加部门",
                 "parameters": [
                     {
                         "type": "string",
@@ -33,40 +32,40 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "所属商场id",
+                        "description": "所属商场ID",
                         "name": "father_id",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "部门编码（不可重复）",
+                        "description": "部门编码 varchar(15)",
                         "name": "apt_id",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "部门名称",
+                        "description": "部门名称 varchar(63)",
                         "name": "apt_name",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "部门地址",
+                        "description": "部门地址 varchar(255)",
                         "name": "apt_address",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "部门电话",
+                        "description": "部门电话 varchar(255)",
                         "name": "apt_tel",
                         "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -76,11 +75,10 @@ const docTemplate = `{
         },
         "/addmall": {
             "post": {
-                "description": "add mall",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "添加商场",
+                "summary": "[2]添加商场",
                 "parameters": [
                     {
                         "type": "string",
@@ -91,27 +89,33 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "商场编码（不可重复）",
+                        "description": "商场编码 varchar(15)",
                         "name": "mall_id",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "商场名称",
+                        "description": "商场名称 varchar(63)",
                         "name": "mall_name",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "商场地址",
+                        "description": "商场地址 varchar(255)",
                         "name": "mall_address",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "商场电话 varchar(255)",
+                        "name": "mall_tel",
                         "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -121,11 +125,10 @@ const docTemplate = `{
         },
         "/addstaff": {
             "post": {
-                "description": "add staff",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "添加员工",
+                "summary": "[2]添加员工",
                 "parameters": [
                     {
                         "type": "string",
@@ -136,33 +139,33 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "所属部门id",
+                        "description": "所属部门ID",
                         "name": "father_id",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "员工编码（不可重复）",
+                        "description": "员工编码 varchar(15)",
                         "name": "staff_id",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "员工姓名",
+                        "description": "员工姓名 varchar(63)",
                         "name": "staff_name",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "员工岗位",
+                        "description": "员工岗位 varchar(255)",
                         "name": "staff_pos",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "员工电话",
+                        "description": "员工电话 varchar(255)",
                         "name": "staff_tel",
                         "in": "formData"
                     },
@@ -175,7 +178,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -189,7 +192,7 @@ const docTemplate = `{
                 "tags": [
                     "root_api"
                 ],
-                "summary": "增加用户",
+                "summary": "[3]增加用户",
                 "parameters": [
                     {
                         "type": "string",
@@ -200,22 +203,24 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "账号",
+                        "description": "账号 varchar(31)",
                         "name": "name",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "密码",
+                        "description": "密码 varchar(127)",
                         "name": "passwd",
-                        "in": "formData"
+                        "in": "formData",
+                        "required": true
                     },
                     {
                         "type": "integer",
                         "description": "账号权限等级",
                         "name": "grade",
-                        "in": "formData"
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -230,11 +235,11 @@ const docTemplate = `{
         },
         "/deleteapt": {
             "post": {
-                "description": "delete apt",
+                "description": "需确认操作：此操作会将所有所属员工删除",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "删除部门（连锁删除）",
+                "summary": "[2]删除部门（连锁删除）",
                 "parameters": [
                     {
                         "type": "string",
@@ -244,7 +249,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "部门ID",
                         "name": "ID",
                         "in": "formData",
@@ -253,7 +258,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -263,11 +268,11 @@ const docTemplate = `{
         },
         "/deletemall": {
             "post": {
-                "description": "delete mall",
+                "description": "需确认操作：此操作会将所有所属部门和员工删除",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "删除商场（连锁删除）",
+                "summary": "[2]删除商场（连锁删除）",
                 "parameters": [
                     {
                         "type": "string",
@@ -277,7 +282,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "商场ID",
                         "name": "ID",
                         "in": "formData",
@@ -286,7 +291,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -296,11 +301,11 @@ const docTemplate = `{
         },
         "/deletestaff": {
             "post": {
-                "description": "delete staff",
+                "description": "需确认操作",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "删除员工",
+                "summary": "[2]删除员工",
                 "parameters": [
                     {
                         "type": "string",
@@ -310,7 +315,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "员工ID",
                         "name": "ID",
                         "in": "formData",
@@ -319,7 +324,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -329,11 +334,11 @@ const docTemplate = `{
         },
         "/editapt": {
             "post": {
-                "description": "edit apt",
+                "description": "进入修改界面后，将原来的值填入对应输入框",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "修改部门信息",
+                "summary": "[2]修改部门信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -343,7 +348,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "部门ID",
                         "name": "ID",
                         "in": "formData",
@@ -351,32 +356,33 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "部门编码",
+                        "description": "部门编码 varchar(15)",
                         "name": "apt_id",
-                        "in": "formData"
+                        "in": "formData",
+                        "required": true
                     },
                     {
                         "type": "string",
-                        "description": "部门名称",
+                        "description": "部门名称 varchar(63)",
                         "name": "apt_name",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "部门地址",
+                        "description": "部门地址 varchar(255)",
                         "name": "apt_address",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "部门电话",
+                        "description": "部门电话 varchar(255)",
                         "name": "apt_tel",
                         "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -386,11 +392,11 @@ const docTemplate = `{
         },
         "/editmall": {
             "post": {
-                "description": "edit mall",
+                "description": "进入修改界面后，将原来的值填入对应输入框",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "修改商场信息",
+                "summary": "[2]修改商场信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -400,7 +406,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "商场ID",
                         "name": "ID",
                         "in": "formData",
@@ -408,32 +414,33 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "商场编码",
+                        "description": "商场编码 varchar(15)",
                         "name": "mall_id",
-                        "in": "formData"
+                        "in": "formData",
+                        "required": true
                     },
                     {
                         "type": "string",
-                        "description": "商场名称",
+                        "description": "商场名称 varchar(63)",
                         "name": "mall_name",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "商场地址",
+                        "description": "商场地址 varchar(255)",
                         "name": "mall_address",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "商场电话",
+                        "description": "商场电话 varchar(255)",
                         "name": "mall_tel",
                         "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -443,11 +450,11 @@ const docTemplate = `{
         },
         "/editstaff": {
             "post": {
-                "description": "edit staff",
+                "description": "进入修改界面后，将原来的值填入对应输入框",
                 "tags": [
                     "admin_api"
                 ],
-                "summary": "修改员工信息",
+                "summary": "[2]修改员工信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -457,7 +464,7 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "员工ID",
                         "name": "ID",
                         "in": "formData",
@@ -465,26 +472,26 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "员工编码",
+                        "description": "员工编码 varchar(15)",
                         "name": "staff_id",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "员工姓名",
+                        "description": "员工姓名 varchar(63)",
                         "name": "staff_name",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "员工岗位",
+                        "description": "员工岗位 varchar(255)",
                         "name": "staff_pos",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "员工电话",
+                        "description": "员工电话 varchar(255)",
                         "name": "staff_tel",
                         "in": "formData"
                     },
@@ -497,7 +504,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_success"
                         }
@@ -507,11 +514,11 @@ const docTemplate = `{
         },
         "/getaptlist": {
             "post": {
-                "description": "get apt list",
+                "description": "father_id为空则获取所有",
                 "tags": [
                     "member_api"
                 ],
-                "summary": "获取部门信息",
+                "summary": "[1]获取部门信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -528,28 +535,55 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "page(defualt 1)",
+                        "description": "页号(默认1)",
                         "name": "page",
                         "in": "formData"
                     },
                     {
                         "type": "integer",
-                        "description": "page size",
+                        "description": "页大小(默认20)",
                         "name": "size",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "keyword",
+                        "description": "搜索关键字(针对编码和名称的%*%)",
                         "name": "keyword",
                         "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "apt list",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/define.Res_get_success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/define.Res_get_success_data"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.ApartmentBasic"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -557,11 +591,10 @@ const docTemplate = `{
         },
         "/getmalllist": {
             "post": {
-                "description": "get mall list",
                 "tags": [
                     "member_api"
                 ],
-                "summary": "获取所有商场信息",
+                "summary": "[1]获取所有商场信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -572,28 +605,55 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "page(defualt 1)",
+                        "description": "页号(默认1)",
                         "name": "page",
                         "in": "formData"
                     },
                     {
                         "type": "integer",
-                        "description": "page size",
+                        "description": "页大小(默认20)",
                         "name": "size",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "keyword",
+                        "description": "搜索关键字(针对编码和名称的%*%)",
                         "name": "keyword",
                         "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "mall list",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/define.Res_get_success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/define.Res_get_success_data"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.MallBasic"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -601,11 +661,11 @@ const docTemplate = `{
         },
         "/getstafflist": {
             "post": {
-                "description": "获取员工信息",
+                "description": "father_id为空则获取所有",
                 "tags": [
                     "member_api"
                 ],
-                "summary": "this is a summary",
+                "summary": "[1]获取员工信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -622,28 +682,55 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "page(defualt 1)",
+                        "description": "页号(默认1)",
                         "name": "page",
                         "in": "formData"
                     },
                     {
                         "type": "integer",
-                        "description": "page size",
+                        "description": "页大小(默认20)",
                         "name": "size",
                         "in": "formData"
                     },
                     {
                         "type": "string",
-                        "description": "keyword",
+                        "description": "搜索关键字(针对编码和名称的%*%)",
                         "name": "keyword",
                         "in": "formData"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "staff list",
+                        "description": "失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
-                            "type": "string"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/define.Res_get_success"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/define.Res_get_success_data"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "list": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/models.StaffBasic"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
@@ -658,14 +745,14 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "account",
+                        "description": "账号 varchar(31)",
                         "name": "username",
                         "in": "formData",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "password",
+                        "description": "密码 varchar(127)",
                         "name": "passwd",
                         "in": "formData",
                         "required": true
@@ -673,7 +760,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "若失败，\"code\": -1,\"msg\": 失败原因",
+                        "description": "grade可用于展示，也可用于隐藏无权限功能\u003cbr\u003e\u003cbr\u003e失败则返回 {\"code\": -1,\"msg\": \"$reason\"}",
                         "schema": {
                             "$ref": "#/definitions/define.Res_login_success"
                         }
@@ -690,7 +777,7 @@ const docTemplate = `{
                 "summary": "ping",
                 "responses": {
                     "200": {
-                        "description": "Helloworld",
+                        "description": "OK",
                         "schema": {
                             "type": "string"
                         }
@@ -700,6 +787,28 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "define.Res_get_success": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "data": {
+                    "$ref": "#/definitions/define.Res_get_success_data"
+                }
+            }
+        },
+        "define.Res_get_success_data": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "list": {}
+            }
+        },
         "define.Res_login_success": {
             "type": "object",
             "properties": {
@@ -735,6 +844,93 @@ const docTemplate = `{
                 "msg": {
                     "type": "string",
                     "example": "success"
+                }
+            }
+        },
+        "models.ApartmentBasic": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer",
+                    "example": 8848
+                },
+                "apt_address": {
+                    "type": "string",
+                    "example": "超商B区二期三楼北面电梯旁"
+                },
+                "apt_id": {
+                    "type": "string",
+                    "example": "dz1-relx06"
+                },
+                "apt_name": {
+                    "type": "string",
+                    "example": "悦刻销售部"
+                },
+                "apt_tel": {
+                    "type": "string",
+                    "example": "18355555555"
+                },
+                "father_id": {
+                    "type": "integer",
+                    "example": 666
+                }
+            }
+        },
+        "models.MallBasic": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer",
+                    "example": 666
+                },
+                "mall_address": {
+                    "type": "string",
+                    "example": "四川省甘孜藏族自治州理塘县朱雀大道1-1"
+                },
+                "mall_id": {
+                    "type": "string",
+                    "example": "dingzhen001"
+                },
+                "mall_name": {
+                    "type": "string",
+                    "example": "丁真烟酒专卖超商"
+                },
+                "mall_tel": {
+                    "type": "string",
+                    "example": "400-114514"
+                }
+            }
+        },
+        "models.StaffBasic": {
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "type": "integer",
+                    "example": 114514
+                },
+                "father_id": {
+                    "type": "integer",
+                    "example": 8848
+                },
+                "staff_address": {
+                    "type": "string",
+                    "example": "销售经理"
+                },
+                "staff_id": {
+                    "type": "string",
+                    "example": "dz1r6-zhenzhu"
+                },
+                "staff_name": {
+                    "type": "string",
+                    "example": "珍珠"
+                },
+                "staff_sal": {
+                    "type": "number",
+                    "example": 100000
+                },
+                "staff_tel": {
+                    "type": "string",
+                    "example": "18355555555"
                 }
             }
         }

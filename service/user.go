@@ -16,9 +16,9 @@ import (
 // @Router /login [post]
 // @Summary 登录
 // @Description
-// @Param username formData string true "account"
-// @Param passwd formData string true "password"
-// @Success 200 {object} define.Res_login_success "若失败，"code": -1,"msg": 失败原因"
+// @Param username formData string true "账号 varchar(31)"
+// @Param passwd formData string true "密码 varchar(127)"
+// @Success 200 {object} define.Res_login_success "grade可用于展示，也可用于隐藏无权限功能<br><br>失败则返回 {"code": -1,"msg": "$reason"}"
 func Login(c *gin.Context) {
 	
 	var user models.User
@@ -71,15 +71,14 @@ func Login(c *gin.Context) {
 	})
 }
 
-// PingExample godoc
 // @Tags root_api
 // @Router /adduser [post]
-// @Summary 增加用户
+// @Summary [3]增加用户
 // @Description add user
 // @Param token header string true "token"
-// @Param name formData string true "账号"
-// @Param passwd formData string false "密码"
-// @Param grade formData int false "账号权限等级"
+// @Param name formData string true "账号 varchar(31)"
+// @Param passwd formData string true "密码 varchar(127)"
+// @Param grade formData int true "账号权限等级"
 // @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
 func AddUser(c *gin.Context) {
 	needGrade := 3

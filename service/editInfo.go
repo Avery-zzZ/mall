@@ -7,18 +7,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// PingExample godoc
 // @Tags admin_api
 // @Router /editmall [post]
-// @Summary 修改商场信息
-// @Description edit mall
+// @Summary [2]修改商场信息
+// @Description 进入修改界面后，将原来的值填入对应输入框
 // @Param token header string true "token"
-// @Param ID formData string true "商场ID"
-// @Param mall_id formData string false "商场编码"
-// @Param mall_name formData string false "商场名称"
-// @Param mall_address formData string false "商场地址"
-// @Param mall_tel formData string false "商场电话"
-// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
+// @Param ID formData int true "商场ID"
+// @Param mall_id formData string true "商场编码 varchar(15)"
+// @Param mall_name formData string false "商场名称 varchar(63)"
+// @Param mall_address formData string false "商场地址 varchar(255)"
+// @Param mall_tel formData string false "商场电话 varchar(255)"
+// @Success 200 {object} define.Res_success "失败则返回 {"code": -1,"msg": "$reason"}"
 func EditMall(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -73,18 +72,17 @@ func EditMall(c *gin.Context) {
 	})
 }
 
-// PingExample godoc
 // @Tags admin_api
 // @Router /editapt [post]
-// @Summary 修改部门信息
-// @Description edit apt
+// @Summary [2]修改部门信息
+// @Description 进入修改界面后，将原来的值填入对应输入框
 // @Param token header string true "token"
-// @Param ID formData string true "部门ID"
-// @Param apt_id formData string false "部门编码"
-// @Param apt_name formData string false "部门名称"
-// @Param apt_address formData string false "部门地址"
-// @Param apt_tel formData string false "部门电话"
-// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
+// @Param ID formData int true "部门ID"
+// @Param apt_id formData string true "部门编码 varchar(15)"
+// @Param apt_name formData string false "部门名称 varchar(63)"
+// @Param apt_address formData string false "部门地址 varchar(255)"
+// @Param apt_tel formData string false "部门电话 varchar(255)"
+// @Success 200 {object} define.Res_success "失败则返回 {"code": -1,"msg": "$reason"}"
 func EditApt(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -138,19 +136,18 @@ func EditApt(c *gin.Context) {
 	})
 }
 
-// PingExample godoc
 // @Tags admin_api
 // @Router /editstaff [post]
-// @Summary 修改员工信息
-// @Description edit staff
+// @Summary [2]修改员工信息
+// @Description 进入修改界面后，将原来的值填入对应输入框
 // @Param token header string true "token"
-// @Param ID formData string true "员工ID"
-// @Param staff_id formData string true "员工编码"
-// @Param staff_name formData string false "员工姓名"
-// @Param staff_pos formData string false "员工岗位"
-// @Param staff_tel formData string false "员工电话"
+// @Param ID formData int true "员工ID"
+// @Param staff_id formData string true "员工编码 varchar(15)"
+// @Param staff_name formData string false "员工姓名 varchar(63)"
+// @Param staff_pos formData string false "员工岗位 varchar(255)"
+// @Param staff_tel formData string false "员工电话 varchar(255)"
 // @Param staff_sal formData float64 false "员工薪水"
-// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
+// @Success 200 {object} define.Res_success "失败则返回 {"code": -1,"msg": "$reason"}"
 func EditStaff(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -176,6 +173,14 @@ func EditStaff(c *gin.Context) {
 		return
 	}
 
+	if staff.ID==0 {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "ID不能为空",
+		})
+		c.Abort()
+		return
+	}
 	if staff.Staff_id=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
@@ -184,10 +189,10 @@ func EditStaff(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	if staff.ID==0 {
+	if staff.Staff_sal<0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "ID不能为空",
+			"msg":  "薪水不能为负数",
 		})
 		c.Abort()
 		return

@@ -7,14 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// PingExample godoc
 // @Tags admin_api
 // @Router /deletemall [post]
-// @Summary 删除商场（连锁删除）
-// @Description delete mall
+// @Summary [2]删除商场（连锁删除）
+// @Description 需确认操作：此操作会将所有所属部门和员工删除
 // @Param token header string true "token"
-// @Param ID formData string true "商场ID"
-// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
+// @Param ID formData int true "商场ID"
+// @Success 200 {object} define.Res_success "失败则返回 {"code": -1,"msg": "$reason"}"
 func DeleteMall(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -64,14 +63,13 @@ func DeleteMall(c *gin.Context) {
 	})
 }
 
-// PingExample godoc
 // @Tags admin_api
 // @Router /deleteapt [post]
-// @Summary 删除部门（连锁删除）
-// @Description delete apt
+// @Summary [2]删除部门（连锁删除）
+// @Description 需确认操作：此操作会将所有所属员工删除
 // @Param token header string true "token"
-// @Param ID formData string true "部门ID"
-// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
+// @Param ID formData int true "部门ID"
+// @Success 200 {object} define.Res_success "失败则返回 {"code": -1,"msg": "$reason"}"
 func DeleteApartment(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
@@ -112,14 +110,13 @@ func DeleteApartment(c *gin.Context) {
 	})
 }
 
-// PingExample godoc
 // @Tags admin_api
 // @Router /deletestaff [post]
-// @Summary 删除员工
-// @Description delete staff
+// @Summary [2]删除员工
+// @Description 需确认操作
 // @Param token header string true "token"
-// @Param ID formData string true "员工ID"
-// @Success 200 {object} define.Res_success "若失败，"code": -1,"msg": 失败原因"
+// @Param ID formData int true "员工ID"
+// @Success 200 {object} define.Res_success "失败则返回 {"code": -1,"msg": "$reason"}"
 func DeleteStaff(c *gin.Context) {
 	needGrade := 2
 	grade, err := getGrade(c.GetHeader("token"), c)
