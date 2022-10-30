@@ -14,7 +14,7 @@ type Staff struct {
 }
 
 type StaffBasic struct {
-	ID         uint    `gorm:"primarykey" json:"ID" example:"114514"`
+	ID         uint    `gorm:"primarykey" json:"ID" form:"ID" example:"114514"`
 	Father_id  int     `gorm:"column:father_id;type:int;" json:"father_id" form:"father_id" example:"8848"`
 	Staff_id   string  `gorm:"column:staff_id;type:varchar(15);" json:"staff_id" form:"staff_id" example:"dz1r6-zhenzhu"`
 	Staff_name string  `gorm:"column:staff_name;type:varchar(63);" json:"staff_name" form:"staff_name" example:"珍珠"`

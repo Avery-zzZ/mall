@@ -14,7 +14,7 @@ type Apartment struct {
 }
 
 type ApartmentBasic struct {
-	ID          uint   `gorm:"primarykey" json:"ID" example:"8848"`
+	ID          uint   `gorm:"primarykey" json:"ID" form:"ID" example:"8848"`
 	Father_id   int    `gorm:"column:father_id;type:int;" json:"father_id" form:"father_id" example:"666"`
 	Apt_id      string `gorm:"column:apt_id;type:varchar(15);" json:"apt_id" form:"apt_id" example:"dz1-relx06"`
 	Apt_name    string `gorm:"column:apt_name;type:varchar(63);" json:"apt_name" form:"apt_name" example:"悦刻销售部"`
