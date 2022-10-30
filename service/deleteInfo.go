@@ -85,8 +85,17 @@ func DeleteApartment(c *gin.Context) {
 		return
 	}
 
-	ID, has := c.GetPostForm("ID")
-	if !has {
+	var apt models.Apartment
+	if err = c.ShouldBind(&apt) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+		return
+	}
+
+	if apt.ID == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "ID不能为空",
@@ -95,7 +104,7 @@ func DeleteApartment(c *gin.Context) {
 		return
 	}
 
-	err = models.DB.Model(new(models.Apartment)).Where("id = ?", ID).Unscoped().Delete(&models.Apartment{}).Error
+	err = models.DB.Model(new(models.Apartment)).Where("id = ?", apt.ID).Unscoped().Delete(&models.Apartment{}).Error
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
@@ -132,8 +141,17 @@ func DeleteStaff(c *gin.Context) {
 		return
 	}
 
-	ID, has := c.GetPostForm("ID")
-	if !has {
+	var staff models.Staff
+	if err = c.ShouldBind(&staff) ; err!=nil{
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+		return
+	}
+
+	if staff.ID == 0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "ID不能为空",
@@ -142,7 +160,7 @@ func DeleteStaff(c *gin.Context) {
 		return
 	}
 
-	err = models.DB.Model(new(models.Staff)).Where("id = ?", ID).Unscoped().Delete(&models.Staff{}).Error
+	err = models.DB.Model(new(models.Staff)).Where("id = ?", staff.ID).Unscoped().Delete(&models.Staff{}).Error
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
