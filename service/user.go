@@ -138,7 +138,7 @@ func AddUser(c *gin.Context) {
 		return
 	}
 
-	err = models.DB.Create(user).Error
+	err = models.DB.Create(&user).Error
 	if err != nil {
 		mysqlErrhandle(err, c)
 		return
