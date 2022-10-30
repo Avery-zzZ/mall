@@ -4,7 +4,6 @@ import (
 	"mall/models"
 	"mall/tool"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -95,8 +94,17 @@ func AddUser(c *gin.Context) {
 		return
 	}
 
-	name, has := c.GetPostForm("name")
-	if !has {
+	var user models.User
+	if err := c.ShouldBind(&user); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "请求格式错误",
+		})
+		c.Abort()
+        return
+    }
+
+	if user.Name=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "账号不能为空",
@@ -104,8 +112,7 @@ func AddUser(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	passwd, has := c.GetPostForm("passwd")
-	if !has {
+	if user.Password=="" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "密码不能为空",
@@ -113,8 +120,7 @@ func AddUser(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	grade_str, has := c.GetPostForm("grade")
-	if !has {
+	if user.Grade==0 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "权限等级不能为空",
@@ -122,16 +128,8 @@ func AddUser(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	grade_, err := strconv.Atoi(grade_str)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "权限等级格式错误",
-		})
-		c.Abort()
-		return
-	}
-	if grade_ > 3 || grade_ < 1 {
+
+	if user.Grade > 3 || user.Grade < 1 {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "未知权限等级",
@@ -140,13 +138,7 @@ func AddUser(c *gin.Context) {
 		return
 	}
 
-	data := &models.User{
-		Name:     name,
-		Password: passwd,
-		Grade:    grade_,
-	}
-
-	err = models.DB.Create(data).Error
+	err = models.DB.Create(user).Error
 	if err != nil {
 		mysqlErrhandle(err, c)
 		return
