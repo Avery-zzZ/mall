@@ -150,7 +150,7 @@ func GetStaffList(c *gin.Context) {
 	if getStruct.Father_id != 0 {
 		tx = tx.Where("father_id = ?", getStruct.Father_id)
 	}
-	list := make([]*models.ApartmentBasic, 0)
+	list := make([]*models.StaffBasic, 0)
 	err := tx.Count(&count).Offset(page).Limit(size).Find(&list).Error
 	if err != nil {
 		log.Println("GetAptList error:", err)
